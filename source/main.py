@@ -1,4 +1,7 @@
 import sys
+import io
+from contextlib import redirect_stdout
+
 from operations import OperationWrapper
 
 def print_help():
@@ -57,8 +60,8 @@ The date field should follow this format: “dd/mm/yyyy” (see Error 2 otherwis
 --full option prints detailed information, including the names of the clients who ordered
 each product.''')
 
-def process_args():
-    arg_lst = sys.argv[1:]
+def process_args(args):
+    arg_lst = args
     if arg_lst[0] == "help":
         print_help()
     elif arg_lst[0] == "clients_create":
@@ -126,8 +129,13 @@ def process_args():
         OperationWrapper.orders_show(arg_lst[1], len(arg_lst) > 2 and arg_lst[2] == "--full")
 
 
-def main():
-    process_args()
+def main(args):
+    buf = io.StringIO() 
+    with redirect_stdout(buf): 
+        process_args(args)
+    x = buf.getvalue()
+    return x
+    
 
 if __name__ == '__main__':
-    main()
+    print(main(sys.argv[1:]))
