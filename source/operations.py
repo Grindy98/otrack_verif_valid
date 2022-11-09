@@ -1,7 +1,11 @@
+from client import Client
+import persistent
+
 class OperationWrapper:
     @staticmethod
     def clients_create(fullname, email, phone):
-        pass
+        c = Client(fullname, email, phone)
+        persistent.get_class_list(Client).append(c)
 
     @staticmethod
     def clients_edit(id, fullname, email, phone):
