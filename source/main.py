@@ -3,6 +3,7 @@ import io
 from contextlib import redirect_stdout
 
 from operations import OperationWrapper
+from exceptions import StandardError
 
 def print_help():
     print('''
@@ -132,7 +133,10 @@ def process_args(args):
 def main(args):
     buf = io.StringIO() 
     with redirect_stdout(buf): 
-        process_args(args)
+        try:
+            process_args(args)
+        except StandardError as e:
+            print(e.get_message())
     x = buf.getvalue()
     return x
     
