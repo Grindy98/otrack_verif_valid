@@ -3,10 +3,10 @@ import io
 from contextlib import redirect_stdout
 
 from operations import OperationWrapper
-from exceptions import StandardError
+import exceptions as excs
 
-def print_help():
-    print('''
+def get_help():
+    return ('''
 otrack help - Displays the following list of commands.
 
 otrack clients_create fullname email [phone] - Creates a client and prints it
@@ -62,72 +62,106 @@ The date field should follow this format: “dd/mm/yyyy” (see Error 2 otherwis
 each product.''')
 
 def process_args(args):
-    arg_lst = args
-    if arg_lst[0] == "help":
-        print_help()
-    elif arg_lst[0] == "clients_create":
-        if len(arg_lst) == 3:
-            OperationWrapper.clients_create(arg_lst[1], arg_lst[2], None)
-        else:
-            OperationWrapper.clients_create(arg_lst[1], arg_lst[2], arg_lst[3])
+    
+    if not args:
+        # Missing an operational arg
+        raise excs.Error1
 
-    elif arg_lst[0] == "clients_edit":
+    if args[0] == "help":
+        print(get_help())
+    elif args[0] == "clients_create":
+        if len(args) < 3:
+            # Missing necessary args
+            raise excs.Error1
+        elif len(args) == 3:
+            OperationWrapper.clients_create(args[1], args[2], None)
+        else:
+            OperationWrapper.clients_create(args[1], args[2], args[3])
+
+    elif args[0] == "clients_edit":
+        if len(args) < 2:
+            # Missing id
+            raise excs.Error1
         new_name = new_email = new_phone = None
-        id = arg_lst[1]
-        arg_lst = arg_lst[2:]
-        for i, arg in enumerate(arg_lst):
+        id = args[1]
+        args = args[2:]
+        for i, arg in enumerate(args):
             if arg == '-n':
-                new_name = arg_lst[i+1]
+                new_name = args[i+1]
             elif arg == '-e':
-                new_email = arg_lst[i+1]
+                new_email = args[i+1]
             elif arg == '-p':
-                if i == len(arg_lst)-1:
+                if i == len(args)-1:
                     new_phone = ''
                 else:
-                    new_phone = arg_lst[i+1]
+                    new_phone = args[i+1]
 
         OperationWrapper.clients_edit(id, new_name, new_email, new_phone)
 
-    elif arg_lst[0] == "clients_delete":
-        OperationWrapper.clients_delete(arg_lst[1])
+    elif args[0] == "clients_delete":
+        if len(args) < 2:
+            # Missing id
+            raise excs.Error1
+        OperationWrapper.clients_delete(args[1])
 
-    elif arg_lst[0] == "clients_show":
-        OperationWrapper.clients_show(arg_lst[1])
+    elif args[0] == "clients_show":
+        if len(args) < 2:
+            # Missing id
+            raise excs.Error1
+        OperationWrapper.clients_show(args[1])
 
-    elif arg_lst[0] == "clients_getid":
-        OperationWrapper.clients_getid(arg_lst[1])
+    elif args[0] == "clients_getid":
+        if len(args) < 2:
+            # Missing email
+            raise excs.Error1
+        OperationWrapper.clients_getid(args[1])
 
-    elif arg_lst[0] == "products_create":
-        OperationWrapper.products_create(arg_lst[1], arg_lst[2], arg_lst[3])
+    elif args[0] == "products_create":
+        if len(args) < 4:
+            # Missing necessary args
+            raise excs.Error1
+        OperationWrapper.products_create(args[1], args[2], args[3])
 
-    elif arg_lst[0] == "products_edit":
+    elif args[0] == "products_edit":
+        if len(args) < 2:
+            # Missing ref
+            raise excs.Error1
         new_name = new_ref = new_price = None
-        ref = arg_lst[1]
-        arg_lst = arg_lst[2:]
-        for i, arg in enumerate(arg_lst):
+        ref = args[1]
+        args = args[2:]
+        for i, arg in enumerate(args):
             if arg == '-n':
-                new_name = arg_lst[i+1]
+                new_name = args[i+1]
             elif arg == '-r':
-                new_ref = arg_lst[i+1]
+                new_ref = args[i+1]
             elif arg == '-p':
-                new_price = arg_lst[i+1]
+                new_price = args[i+1]
 
         OperationWrapper.products_edit(ref, new_ref, new_name, new_price)
     
-    elif arg_lst[0] == "products_delete":
-        OperationWrapper.products_delete(arg_lst[1])
+    elif args[0] == "products_delete":
+        if len(args) < 2:
+            # Missing ref
+            raise excs.Error1
+        OperationWrapper.products_delete(args[1])
 
-    elif arg_lst[0] == "products_show":
-        OperationWrapper.products_show(arg_lst[1])
+    elif args[0] == "products_show":
+        if len(args) < 2:
+            # Missing ref
+            raise excs.Error1
+        OperationWrapper.products_show(args[1])
 
-    elif arg_lst[0] == "products_find":
-        OperationWrapper.products_find(arg_lst[1])
+    elif args[0] == "products_find":
+        if len(args) < 2:
+            # Missing query string
+            raise excs.Error1
+        OperationWrapper.products_find(args[1])
 
-    elif arg_lst[0] == "orders_add":
-        OperationWrapper.orders_add(arg_lst[1], arg_lst[2], arg_lst[3], arg_lst[4])
+    elif args[0] == "orders_add":
+        OperationWrapper.orders_add(args[1], args[2], args[3], args[4])
 
-    elif arg_lst[0] == "orders_show":
-        OperationWrapper.orders_show(arg_lst[1], len(arg_lst) > 2 and arg_lst[2] == "--full")
+    elif args[0] == "orders_show":
+        OperationWrapper.orders_show(args[1], len(args) > 2 and args[2] == "--full")
 
 
 def main(args):
@@ -135,7 +169,7 @@ def main(args):
     with redirect_stdout(buf): 
         try:
             process_args(args)
-        except StandardError as e:
+        except excs.StandardError as e:
             print(e.get_message())
     x = buf.getvalue()
     return x

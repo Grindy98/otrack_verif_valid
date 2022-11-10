@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import main
 
 class StandardError(ValueError, ABC):
     
@@ -9,7 +10,7 @@ class StandardError(ValueError, ABC):
 class Error1(StandardError):
 
     def get_message():
-        return "Missing required arguments to command."
+        return "Missing required arguments to command.\n" + main.get_help()
 
 class Error2(StandardError):
 
