@@ -5,7 +5,6 @@ import exceptions as e
 
 class Client:
     def __init__(self, name, email, phone):
-        assert(all(x is not None for x in [name, email, phone]))
         self.name = name
         self.email = email
         self.phone = phone

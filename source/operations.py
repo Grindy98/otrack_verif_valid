@@ -17,12 +17,12 @@ class OperationWrapper:
         
         # Change client properties on the fly because incorrect modifications won't affect the save file
         to_edit = search_l[0]
-        if fullname:
+        if fullname is not None:
             to_edit.name = fullname
-        if email:
+        if email is not None:
             #TODO: check email uniqueness after spec update
             to_edit.email = email
-        if phone:
+        if phone is not None:
             to_edit.phone = phone
         
         if not to_edit.validate():
