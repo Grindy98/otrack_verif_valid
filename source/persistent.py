@@ -1,4 +1,5 @@
 import pickle
+
 _state_dict = None
 
 def load_from_save(filename):

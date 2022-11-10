@@ -5,32 +5,36 @@ import exceptions as e
 
 class Client:
     def __init__(self, name, email, phone):
-        self._name = name
-        self._email = email
-        self._phone = phone
+        assert(all(x is not None for x in [name, email, phone]))
+        self.name = name
+        self.email = email
+        self.phone = phone
 
         #TODO: check for identical email after spec update
         if not self.validate():
             raise e.Error2()
         
         # Get list of ids and choose next one after max value
-        max_id = max([c._id for c in persistent.get_class_list(Client)] + [0])
-        self._id = max_id + 1
+        max_id = max([c.id for c in self.get_list()] + [0])
+        self.id = max_id + 1
 
     def validate(self):
         # If name or email don't exist
-        if self._name is None or self._email is None:
+        if not self.name or not self.email:
             return False
         # If email does not contain @
-        if not self._email.contains('@'):
+        if not self.email.contains('@'):
             return False
         # If phone exists and isn't made out of digits alone
-        if self._phone is not None and not bool(re.match(r'^[0-9]+$', self._phone)):
+        if self.phone and not bool(re.match(r'^[0-9]+$', self.phone)):
             return False
         return True
     
     def __str__(self) -> str:
-        if self._phone is None:
-            return f"{self._name} - {self._email} - Id: {self._id}"
-        return f"{self._name} - {self._email} - {self._phone} - Id: {self._id}"
+        if self.phone:
+            return f"{self.name} - {self.email} - Id: {self.id}"
+        return f"{self.name} - {self.email} - {self.phone} - Id: {self.id}"
     
+    @classmethod
+    def get_list(cls):
+        return persistent.get_class_list(cls)
