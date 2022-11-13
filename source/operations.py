@@ -1,6 +1,9 @@
 from client import Client
 from product import Product
+from order import Order
 import exceptions as e
+
+import re
 
 class OperationWrapper:
     @staticmethod
@@ -129,8 +132,23 @@ class OperationWrapper:
     
     @staticmethod
     def orders_add(client_id, product_ref, amount, date):
-        pass
+        o = Order(client_id, product_ref, amount, date)
+        Order.get_list().append(o)
     
     @staticmethod
     def orders_show(date, show_full):
-        pass
+        if not bool(re.search("([0-9]|1[0-9]|2[0-9]|3[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-5])/([0-9][0-9][0-9][0-9])", date)):
+            raise e.Error2
+        
+        orders_list = [order for order in Order.get_list() if order.date == date]
+            
+        if show_full:
+            for order in orders_list:
+                print("Order details: ", order)
+                client = [c for c in Client.get_list() if c.id == order.client_id]
+                print("Client details: ", client[0])
+                product = [p for p in Product.get_list() if p.id == order.product_ref]
+                print("Product details: ", product[0])
+                
+        for order in orders_list:
+                print("Order details: ", order)

@@ -1,11 +1,15 @@
 import pickle
+import os
 
 _state_dict = None
 
 def load_from_save(filename):
     # TODO: check if filename exists, else empty state dict
-    with open(filename, 'r') as infile:
-        _state_dict = pickle.load(infile)
+    if not os.path.exists(filename):
+        return None
+    else:
+        with open(filename, 'r') as infile:
+            _state_dict = pickle.load(infile)
 
 def dump_to_save(filename):
     with open(filename, 'r') as outfile:
