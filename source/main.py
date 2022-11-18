@@ -2,8 +2,8 @@ import sys
 import io
 from contextlib import redirect_stdout
 
-from operations import OperationWrapper
-import exceptions as excs
+import source.exceptions as excs
+from source.operations import OperationWrapper
 
 def get_help():
     return ('''

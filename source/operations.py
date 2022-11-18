@@ -1,7 +1,7 @@
-from client import Client
-from product import Product
-from order import Order
-import exceptions as e
+from source.client import Client
+from source.product import Product
+from source.order import Order
+import source.exceptions as e
 
 import re
 
@@ -28,7 +28,7 @@ class OperationWrapper:
             email_l = [c for c in Client.get_list() if c.email == email]
             if email_l:
                 raise e.Error6
-                
+
             to_edit.email = email
         if phone is not None:
             to_edit.phone = phone

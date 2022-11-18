@@ -1,7 +1,7 @@
 import re
 
-import persistent
-import exceptions as e
+import source.persistent as persistent
+import source.exceptions as e
 
 class Product:
     def __init__(self, ref, name, price):
