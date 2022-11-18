@@ -24,7 +24,11 @@ class OperationWrapper:
         if fullname is not None:
             to_edit.name = fullname
         if email is not None:
-            #TODO: check email uniqueness after spec update
+            # Check email uniqueness after spec update
+            email_l = [c for c in Client.get_list() if c.email == email]
+            if email_l:
+                raise e.Error6
+                
             to_edit.email = email
         if phone is not None:
             to_edit.phone = phone

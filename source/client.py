@@ -9,9 +9,14 @@ class Client:
         self.email = email
         self.phone = phone
 
-        #TODO: check for identical email after spec update
         if not self.validate():
             raise e.Error2()
+        
+        # Check email uniqueness
+        email_l = [c for c in self.get_list() if c.email == email]
+        if email_l:
+            raise e.Error6
+                
         
         # Get list of ids and choose next one after max value
         max_id = max([c.id for c in self.get_list()] + [0])

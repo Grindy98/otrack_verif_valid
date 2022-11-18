@@ -32,3 +32,8 @@ class Error5(StandardError):
     def get_message():
         return "Impossible to register the product: duplicate reference."
 
+class Error6(StandardError):
+
+    def get_message():
+        return "This email is already used, please choose another one."
+
