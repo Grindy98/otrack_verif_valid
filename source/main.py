@@ -111,8 +111,8 @@ def process_args(args):
         OperationWrapper.orders_show(args[1], len(args) > 2 and args[2] == "--full")
 
 
-def main(args):
-    load_from_save(FILENAME)
+def main(args, filename):
+    load_from_save(filename)
     buf = io.StringIO() 
     with redirect_stdout(buf): 
         try:
@@ -120,9 +120,9 @@ def main(args):
         except excs.StandardError as e:
             print(e.get_message())
     x = buf.getvalue()
-    dump_to_save(FILENAME)
+    dump_to_save(filename)
     return x
     
 
 if __name__ == '__main__':
-    print(main(sys.argv[1:]))
+    print(main(sys.argv[1:], FILENAME))

@@ -1,6 +1,8 @@
 import pytest
 from source.main import main
 
+FILENAME = 'persistant_state_test.pkl'
+
 def test_TC1(run, get_help):
     assert run('clients_create') == \
         'Missing required arguments to command.\n' + get_help()
@@ -11,7 +13,7 @@ def test_TC1(run, get_help):
 @pytest.fixture
 def run():
     def wrapper(argstring):
-        return main(argstring.split()).strip()
+        return main(argstring.split(), FILENAME).strip()
     return wrapper
 
 @pytest.fixture

@@ -125,5 +125,9 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
+
+persistant_state.pkl
+persistant_state_test.pkl
+
 # Pyre type checker
 .pyre/
