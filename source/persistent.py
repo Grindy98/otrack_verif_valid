@@ -4,15 +4,16 @@ import os
 _state_dict = None
 
 def load_from_save(filename):
-    # TODO: check if filename exists, else empty state dict
-    if not os.path.exists(filename):
-        return None
-    else:
-        with open(filename, 'r') as infile:
+    try:
+        with open(filename, 'rb') as infile:
             _state_dict = pickle.load(infile)
+    except EOFError as eof:
+        _state_dict = {}
+    except FileNotFoundError as fnf:
+        _state_dict = {}
 
 def dump_to_save(filename):
-    with open(filename, 'w') as outfile:
+    with open(filename, 'wb') as outfile:
         pickle.dump(_state_dict, outfile)
 
 def get_class_list(cls : type):
