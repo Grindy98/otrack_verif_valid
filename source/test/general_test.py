@@ -32,8 +32,7 @@ def run():
 @pytest.fixture
 def get_help():
     def wrapper():
-        return ('''
-otrack help - Displays the following list of commands.
+        return ('''otrack help - Displays the following list of commands.
 
 otrack clients_create fullname email [phone] - Creates a client and prints it
 with the client id. Email must contain an '@', and the phone field should be only digits (see

@@ -37,8 +37,7 @@ class Error6(StandardError):
         return "This email is already used, please choose another one."
 
 def get_help():
-    return ('''
-otrack help - Displays the following list of commands.
+    return ('''otrack help - Displays the following list of commands.
 
 otrack clients_create fullname email [phone] - Creates a client and prints it
 with the client id. Email must contain an '@', and the phone field should be only digits (see

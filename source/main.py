@@ -15,7 +15,7 @@ def process_args(args):
         raise excs.Error1
 
     if args[0] == "help":
-        print(excs.get_help())
+        print(excs.get_help())        
     elif args[0] == "clients_create":
         if len(args) < 3:
             # Missing necessary args
@@ -109,6 +109,10 @@ def process_args(args):
 
     elif args[0] == "orders_show":
         OperationWrapper.orders_show(args[1], len(args) > 2 and args[2] == "--full")
+    
+    else:
+        # Handles non-existent argument
+        raise excs.Error1
 
 
 def main(args, filename):
