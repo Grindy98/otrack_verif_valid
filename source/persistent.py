@@ -12,7 +12,7 @@ def load_from_save(filename):
             _state_dict = pickle.load(infile)
 
 def dump_to_save(filename):
-    with open(filename, 'r') as outfile:
+    with open(filename, 'w') as outfile:
         pickle.dump(_state_dict, outfile)
 
 def get_class_list(cls : type):
