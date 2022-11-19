@@ -4,6 +4,9 @@ from contextlib import redirect_stdout
 
 import source.exceptions as excs
 from source.operations import OperationWrapper
+from source.persistent import dump_to_save, load_from_save
+
+FILENAME = 'persistant_state.pkl'
 
 def process_args(args):
     
@@ -109,6 +112,7 @@ def process_args(args):
 
 
 def main(args):
+    load_from_save(FILENAME)
     buf = io.StringIO() 
     with redirect_stdout(buf): 
         try:
@@ -116,6 +120,7 @@ def main(args):
         except excs.StandardError as e:
             print(e.get_message())
     x = buf.getvalue()
+    dump_to_save(FILENAME)
     return x
     
 
