@@ -1,5 +1,4 @@
 import pytest
-print(__name__)
 from source.main import main
 
 def test_TC1(run, get_help):
