@@ -47,8 +47,7 @@ class OperationWrapper:
         # If no matching ID was found
         if not search_l:
             raise e.Error3
-        # dd/mm/yyyy
-        # TODO: past and future order modifications should be handled here after implementation
+        
         today = date.today()        
         current_date = today.strftime("%d/%m/%Y")
         
@@ -124,7 +123,7 @@ class OperationWrapper:
         # If no matching ref was found
         if not search_l:
             raise e.Error3
-        # TODO: past and future order modifications should be handled here after implementation
+        
         today = date.today()        
         current_date = today.strftime("%d/%m/%Y")
         
