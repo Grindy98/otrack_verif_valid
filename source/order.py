@@ -36,7 +36,7 @@ class Order:
         return 0
     
     def __str__(self) -> str:
-        return f"{self.client_id} ordered {self.product_ref} {self.amount} times for the date {self.date}"
+        return f"{self.product_ref} - {self.amount}"
     
     @classmethod
     def get_list(cls):

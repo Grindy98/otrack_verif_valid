@@ -3,6 +3,7 @@ from source.product import Product
 from source.order import Order
 import source.exceptions as e
 
+from datetime import date
 import re
 
 class OperationWrapper:
@@ -46,7 +47,20 @@ class OperationWrapper:
         # If no matching ID was found
         if not search_l:
             raise e.Error3
+        # dd/mm/yyyy
         # TODO: past and future order modifications should be handled here after implementation
+        today = date.today()        
+        current_date = today.strftime("%d/%m/%Y")
+        
+        # Get future and past orders and handle modifications
+        future_orders = [o for o in Order.get_list() if o.client_id == id and o.date > current_date]
+        past_orders = [o for o in Order.get_list() if o.client_id == id and o.date < current_date]
+        
+        for order in future_orders:
+            Order.get_list().remove(order)
+        
+        for order in past_orders:
+            order.client_id = "Removed user"
 
         Client.get_list().remove(search_l[0])
     
@@ -111,6 +125,18 @@ class OperationWrapper:
         if not search_l:
             raise e.Error3
         # TODO: past and future order modifications should be handled here after implementation
+        today = date.today()        
+        current_date = today.strftime("%d/%m/%Y")
+        
+        # Get future and past orders and handle modifications
+        future_orders = [o for o in Order.get_list() if o.product_ref == ref and o.date > current_date]
+        past_orders = [o for o in Order.get_list() if o.product_ref == ref and o.date < current_date]
+        
+        for order in future_orders:
+            Order.get_list().remove(order)
+        
+        for order in past_orders:
+            order.client_id = "Removed user"
 
         Product.get_list().remove(search_l[0])
     
@@ -148,11 +174,13 @@ class OperationWrapper:
             
         if show_full:
             for order in orders_list:
-                print("Order details: ", order)
+                print("Order for the date: ", date, "\n")
+                print(order)
                 client = [c for c in Client.get_list() if c.id == order.client_id]
-                print("Client details: ", client[0])
-                product = [p for p in Product.get_list() if p.id == order.product_ref]
-                print("Product details: ", product[0])
+                for c in client:
+                    print(c.id, " - ", c.name, " - ", order.amount)
                 
         for order in orders_list:
-                print("Order details: ", order)
+            print("Order for the date: ", date, "\n")
+            print(order)
+                
