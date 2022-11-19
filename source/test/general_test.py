@@ -5,26 +5,22 @@ from source.client import Client
 
 FILENAME = 'persistant_state_test.pkl'
 
-def test_TC1(run, get_help, pers_client):
-    assert run('clients_create') == \
+def test_A1(run, get_help, pers_empty):
+    assert run('') == \
         'Missing required arguments to command.\n' + get_help()
+        
+def test_A2(run, get_help, pers_empty):
+    assert run('non-existent') == \
+        'Missing required arguments to command.\n' + get_help()
+        
+def test_A3(run, get_help, pers_empty):
+    assert run('help') == get_help()
 
 
 ######## FIXTURES ########
-# Empty fixture, client fixture
 @pytest.fixture
 def pers_empty():
     pers._state_dict = {}
-    pers.dump_to_save(FILENAME)
-    
-@pytest.fixture
-def pers_client(pers_empty):
-    pers.load_from_save(FILENAME)
-    client = Client.__new__(Client)
-    client.name = 'afawfwa'
-    client.email = '1@2'
-    client.phone = '12312'
-    pers.get_class_list(Client).append(client)
     pers.dump_to_save(FILENAME)
 
 @pytest.fixture
