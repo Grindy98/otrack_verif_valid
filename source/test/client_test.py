@@ -56,7 +56,7 @@ def test_B12(run, pers_client_create, get_help):
     assert run(['clients_edit']) == \
         'Missing required arguments to command.\n' + get_help()
 
-def test_B13(run, pers_client_create):
+def test_B13(run, pers_empty):
     assert run(['clients_edit', 'i']) == \
         'No client matches with this information.'
 
@@ -64,12 +64,12 @@ def test_B14(run, pers_client_create_mult):
     assert run(['clients_edit', '1', '-e', 'jackson@hotmail.com']) == \
         'This email is already used, please choose another one.'
 
-def test_B15(run, pers_client_create):
+def test_B15(run, pers_empty):
     assert run(['clients_delete', 'i']) == \
         'No client matches with this information.'
 
-def test_B16(run, pers_client_create):
-    assert run(['clients_delete', '2']) == \
+def test_B16(run, pers_empty):
+    assert run(['clients_delete', '1']) == \
         'No client matches with this information.'
 
 def test_B17(run, pers_client_create):
