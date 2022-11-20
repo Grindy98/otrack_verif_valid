@@ -27,7 +27,7 @@ class Client:
         if not self.name or not self.email:
             return False
         # If email does not contain @
-        if not self.email.contains('@'):
+        if not '@' in self.email:
             return False
         # If phone exists and isn't made out of digits alone
         if self.phone and not bool(re.match(r'^[0-9]+$', self.phone)):
