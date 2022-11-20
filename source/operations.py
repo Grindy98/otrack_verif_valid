@@ -11,6 +11,7 @@ class OperationWrapper:
     def clients_create(fullname, email, phone):
         c = Client(fullname, email, phone)
         Client.get_list().append(c)
+        print(c)
 
     @staticmethod
     def clients_edit(id, fullname, email, phone):

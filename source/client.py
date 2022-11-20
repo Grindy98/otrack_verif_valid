@@ -35,7 +35,7 @@ class Client:
         return True
     
     def __str__(self) -> str:
-        if self.phone:
+        if not self.phone:
             return f"{self.name} - {self.email} - Id: {self.id}"
         return f"{self.name} - {self.email} - {self.phone} - Id: {self.id}"
     

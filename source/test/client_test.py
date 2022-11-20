@@ -11,13 +11,13 @@ def test_B1(run, pers_empty, get_help):
         'Missing required arguments to command.\n' + get_help()
 
 def test_B2(run, pers_empty):
-    outp = run(['clients_create', 'John Smith', 'john_smith@email.org'])
-    assert re.fullmatch(r'John Smith - john.smith@email.com - Id: \d+\n',
+    outp = run(['clients_create', 'John Smith', 'john_smith@email.com'])
+    assert re.match(r'John Smith - john_smith@email.com - Id: 1',
         outp), outp
 
 def test_B3(run, pers_empty):
-    outp = run(['clients_create', 'John Smith', 'john_smith@email.org', '768387991'])
-    assert re.fullmatch(r'John Smith - john.smith@email.com - 768387991 - Id: \d+\n',
+    outp = run(['clients_create', 'John Smith', 'john_smith@email.com', '768387991'])
+    assert re.match(r'John Smith - john_smith@email.com - 768387991 - Id: \d+',
         outp), outp
 
 def test_B4(run, pers_empty):
