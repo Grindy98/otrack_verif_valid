@@ -6,15 +6,15 @@ from source.client import Client
 FILENAME = 'persistant_state_test.pkl'
 
 def test_A1(run, get_help, pers_empty):
-    assert run('') == \
+    assert run([]) == \
         'Missing required arguments to command.\n' + get_help()
         
 def test_A2(run, get_help, pers_empty):
-    assert run('non-existent') == \
+    assert run(['non-existent']) == \
         'Missing required arguments to command.\n' + get_help()
         
 def test_A3(run, get_help, pers_empty):
-    assert run('help') == get_help()
+    assert run(['help']) == get_help()
 
 
 ######## FIXTURES ########
@@ -26,7 +26,7 @@ def pers_empty():
 @pytest.fixture
 def run():
     def wrapper(argstring):
-        return main(argstring.split(), FILENAME).strip()
+        return main(argstring, FILENAME).strip()
     return wrapper
 
 @pytest.fixture
