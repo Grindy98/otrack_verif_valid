@@ -56,6 +56,10 @@ def test_A16(run, pers_product_create_mult, get_help):
     assert run('products_edit appl01 -p 78') == \
         "No client matches with this information."
 
+def test_A17(run, pers_empty, get_help):
+    assert run('products_create !tmt Tomatoes 1') == \
+        'Invalid data format.'
+
 ######## FIXTURES ########
 @pytest.fixture
 def pers_product_create(pers_empty):

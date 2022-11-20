@@ -1,5 +1,5 @@
 [run]
-source = .
+source = ..
 branch = True
 dynamic_context = test_function
 [report] 
