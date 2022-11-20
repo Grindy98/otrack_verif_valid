@@ -15,6 +15,10 @@ class OperationWrapper:
 
     @staticmethod
     def clients_edit(id, fullname, email, phone):
+        try:
+            id = int(id)
+        except:
+            raise e.Error3
         search_l = [c for c in Client.get_list() if c.id == id]
         assert(len(search_l) <= 1)
         # If no matching ID was found
@@ -43,6 +47,10 @@ class OperationWrapper:
 
     @staticmethod
     def clients_delete(id):
+        try:
+            id = int(id)
+        except:
+            raise e.Error3
         search_l = [c for c in Client.get_list() if c.id == id]
         assert(len(search_l) <= 1)
         # If no matching ID was found
@@ -66,6 +74,10 @@ class OperationWrapper:
     
     @staticmethod
     def clients_show(id):
+        try:
+            id = int(id)
+        except:
+            raise e.Error3
         search_l = [c for c in Client.get_list() if c.id == id]
         assert(len(search_l) <= 1)
         # If no matching ID was found
@@ -76,7 +88,7 @@ class OperationWrapper:
     
     @staticmethod
     def clients_getid(email):
-        search_l = [c for c in Client.get_list() if c.id == id]
+        search_l = [c for c in Client.get_list() if c.email == email]
         assert(len(search_l) <= 1)
         # If no matching email was found
         if not search_l:
