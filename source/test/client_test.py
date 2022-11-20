@@ -84,11 +84,11 @@ def test_B19(run, pers_client_create):
     assert run(['clients_show', 'i']) == \
         'No client matches with this information.'
 
-def test_B20(run, pers_client_create):
-    assert run(['clients_show', '2']) == \
+def test_B20(run, pers_empty):
+    assert run(['clients_show', '1']) == \
         'No client matches with this information.'
 
-def test_B21(run, pers_client_create):
+def test_B21(run, pers_empty):
     assert run(['clients_getid', 'a']) == \
         'No client matches with this information.'
 
