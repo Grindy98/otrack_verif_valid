@@ -92,7 +92,7 @@ class OperationWrapper:
     
     @staticmethod
     def products_edit(ref, new_ref, name, price):
-        search_l = [p for p in Product.get_list() if p.id == id]
+        search_l = [p for p in Product.get_list() if p.ref == ref]
         assert(len(search_l) <= 1)
         # If no matching ref was found
         if not search_l:
@@ -122,7 +122,7 @@ class OperationWrapper:
         assert(len(search_l) <= 1)
         # If no matching ref was found
         if not search_l:
-            raise e.Error3
+            raise e.Error4
         
         today = date.today()        
         current_date = today.strftime("%d/%m/%Y")
@@ -145,7 +145,7 @@ class OperationWrapper:
         assert(len(search_l) <= 1)
         # If no matching ref was found
         if not search_l:
-            raise e.Error3
+            raise e.Error4
         
         print(search_l[0])
     
