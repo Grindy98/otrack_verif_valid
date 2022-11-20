@@ -129,5 +129,7 @@ dmypy.json
 persistant_state.pkl
 persistant_state_test.pkl
 
+testrun.*
+
 # Pyre type checker
 .pyre/

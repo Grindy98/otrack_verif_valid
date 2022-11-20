@@ -28,6 +28,74 @@ def test_B5(run, pers_empty):
     assert run(['clients_create', 'John Smith', 'john_smith@email.org', '+34678987678']) == \
         'Invalid data format.'
 
+def test_B6(run, pers_client_create):
+    assert run(['clients_create', 'Jane Doe', 'jane.doe@hotmail.com', '34678987678']) == \
+        'This email is already used, please choose another one.'
+
+def test_B7(run, pers_empty):
+    assert run(['clients_edit', '1', '-n', 'Jane Marcus']) == \
+        'No client matches with this information.'
+
+def test_B8(run, pers_client_create):
+    assert run(['clients_edit', '1', '-n', 'Jane Marcus']) == \
+        'Jane Marcus - jane.doe@hotmail.com - 674328876 - Id: 1'
+
+def test_B9(run, pers_client_create):
+    assert run(['clients_edit', '1', '-e', 'janed@gmail.com', '-p', '']) == \
+        'Jane Doe - janed@gmail.com - Id: 1'
+
+def test_B10(run, pers_client_create):
+    assert run(['clients_edit', '1', '-p', '876']) == \
+        'Jane Doe - jane.doe@hotmail.com - 876 - Id: 1'
+
+def test_B11(run, pers_client_create):
+    assert run(['clients_edit', '1', '-e', 'not_email', '-p']) == \
+        'Invalid data format.'
+
+def test_B12(run, pers_client_create, get_help):
+    assert run(['clients_edit']) == \
+        'Missing required arguments to command.\n' + get_help()
+
+def test_B13(run, pers_client_create):
+    assert run(['clients_edit', 'i']) == \
+        'No client matches with this information.'
+
+def test_B14(run, pers_client_create_mult):
+    assert run(['clients_edit', '1', '-e', 'jackson@hotmail.com']) == \
+        'This email is already used, please choose another one.'
+
+def test_B15(run, pers_client_create):
+    assert run(['clients_delete', 'i']) == \
+        'No client matches with this information.'
+
+def test_B16(run, pers_client_create):
+    assert run(['clients_delete', '2']) == \
+        'No client matches with this information.'
+
+def test_B17(run, pers_client_create):
+    assert run(['clients_delete', '1']) == \
+        ''
+
+def test_B18(run, pers_client_create):
+    assert run(['clients_show', '1']) == \
+        'Jane Doe - jane.doe@hotmail.com - 674328876 - Id: 1'
+    
+def test_B19(run, pers_client_create):
+    assert run(['clients_show', 'i']) == \
+        'No client matches with this information.'
+
+def test_B20(run, pers_client_create):
+    assert run(['clients_show', '2']) == \
+        'No client matches with this information.'
+
+def test_B21(run, pers_client_create):
+    assert run(['clients_getid', 'a']) == \
+        'No client matches with this information.'
+
+def test_B22(run, pers_client_create):
+    assert run(['clients_getid', 'jane.doe@hotmail.com']) == \
+        '1'
+
 ######## FIXTURES ########
 @pytest.fixture
 def pers_client_create(pers_empty):
@@ -36,5 +104,25 @@ def pers_client_create(pers_empty):
     client.name = 'Jane Doe'
     client.email = 'jane.doe@hotmail.com'
     client.phone = '674328876'
+    client.id = 1
     pers.get_class_list(Client).append(client)
+    pers.dump_to_save(FILENAME)
+
+@pytest.fixture
+def pers_client_create_mult(pers_empty):
+    pers.load_from_save(FILENAME)
+    client = Client.__new__(Client)
+    client.name = 'Jane Doe'
+    client.email = 'jane.doe@hotmail.com'
+    client.phone = '674328876'
+    client.id = 1
+    pers.get_class_list(Client).append(client)
+
+    client = Client.__new__(Client)
+    client.name = 'Jackson'
+    client.email = 'jackson@hotmail.com'
+    client.phone = ''
+    client.id = 2
+    pers.get_class_list(Client).append(client)
+
     pers.dump_to_save(FILENAME)
