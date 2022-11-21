@@ -130,7 +130,6 @@ persistant_state.pkl
 persistant_state_test.pkl
 
 testrun.*
-helper_script.py
 
 # Pyre type checker
 .pyre/
