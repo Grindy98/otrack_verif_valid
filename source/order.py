@@ -6,7 +6,7 @@ import source.exceptions as e
 import datetime
 
 class Order:
-    def __init__(self, client, product, date, amount) -> None:
+    def __init__(self, client, product, amount, date) -> None:
         self.product_ref = product
         self.date = date
 
