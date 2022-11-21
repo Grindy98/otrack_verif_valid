@@ -98,10 +98,14 @@ def test_B22(run, pers_client_create):
     assert run(['clients_getid', 'jane.doe@hotmail.com']) == \
         '1'
         
-def test_A30(run, pers_order_create, get_help):
+def test_A30(run, pers_order_create):
     assert run(['clients_delete', '1']) == \
         ""
         
-def test_A31(run, pers_order_create, get_help):
+def test_A31(run, pers_order_create):
     assert run(['clients_delete', '2']) == \
         ""
+
+def test_B24(run, pers_empty):
+    assert run(['clients_create', '', 'email@email.com']) == \
+        "Invalid data format."

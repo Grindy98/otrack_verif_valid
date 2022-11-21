@@ -81,3 +81,7 @@ def test_A28(run, pers_order_create, get_help):
 def test_A29(run, pers_order_create, get_help):
     assert run(['products_delete', 'ctmt01']) == \
         ""
+
+def test_B25(run, pers_empty):
+    assert run(['products_create', 'refMissing', 'Nothing', '']) == \
+        "Invalid data format."
