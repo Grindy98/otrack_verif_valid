@@ -7,10 +7,20 @@ import datetime
 
 class Order:
     def __init__(self, client, product, date, amount) -> None:
-        self.client_id = client
         self.product_ref = product
         self.date = date
-        self.amount = amount
+
+        # Convert string to int
+        try:
+            self.client_id = int(client)
+        except:
+            raise e.Error3()
+
+        # Convert string to float
+        try:
+            self.amount = float(amount)
+        except:
+            raise e.Error2()
         
         validate = self.validate()
         
@@ -29,7 +39,7 @@ class Order:
         if not self.product_ref:
             return 4
         # TODO: If date exists and is not in date format
-        if self.amount < 0 or not isinstance(self.amount, int):
+        if self.amount < 0:
             return 2
         if not bool(re.search("([0-9]|1[0-9]|2[0-9]|3[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-5])/([0-9][0-9][0-9][0-9])", self.date)):
             return 2
