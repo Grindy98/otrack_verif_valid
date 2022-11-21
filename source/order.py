@@ -40,7 +40,7 @@ class Order:
         
         if not search_c:
             return 3
-        # If no product has the specified product re
+        # If no product has the specified product ref
         if not search_p:
             return 4
         # TODO: If date exists and is not in date format
