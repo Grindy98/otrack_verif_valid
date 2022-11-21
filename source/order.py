@@ -26,7 +26,7 @@ class Order:
         if not self.client_id:
             return 3
         # If no product has the specified product ref
-        if self.product_ref:
+        if not self.product_ref:
             return 4
         # TODO: If date exists and is not in date format
         if self.amount < 0 or not isinstance(self.amount, int):
