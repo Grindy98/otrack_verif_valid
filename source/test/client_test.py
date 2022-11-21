@@ -5,6 +5,8 @@ from source.main import main
 import source.persistent as pers
 from source.client import Client
 from source.test.general_test import run, FILENAME, pers_empty, get_help
+from source.order import Order
+from source.test.fixtures import pers_product_create, pers_product_create_mult, pers_client_create, pers_client_create_mult, pers_order_create
 
 def test_B1(run, pers_empty, get_help):
     assert run(['clients_create']) == \
@@ -95,34 +97,11 @@ def test_B21(run, pers_empty):
 def test_B22(run, pers_client_create):
     assert run(['clients_getid', 'jane.doe@hotmail.com']) == \
         '1'
-
-######## FIXTURES ########
-@pytest.fixture
-def pers_client_create(pers_empty):
-    pers.load_from_save(FILENAME)
-    client = Client.__new__(Client)
-    client.name = 'Jane Doe'
-    client.email = 'jane.doe@hotmail.com'
-    client.phone = '674328876'
-    client.id = 1
-    pers.get_class_list(Client).append(client)
-    pers.dump_to_save(FILENAME)
-
-@pytest.fixture
-def pers_client_create_mult(pers_empty):
-    pers.load_from_save(FILENAME)
-    client = Client.__new__(Client)
-    client.name = 'Jane Doe'
-    client.email = 'jane.doe@hotmail.com'
-    client.phone = '674328876'
-    client.id = 1
-    pers.get_class_list(Client).append(client)
-
-    client = Client.__new__(Client)
-    client.name = 'Jackson'
-    client.email = 'jackson@hotmail.com'
-    client.phone = ''
-    client.id = 2
-    pers.get_class_list(Client).append(client)
-
-    pers.dump_to_save(FILENAME)
+        
+def test_A30(run, pers_order_create, get_help):
+    assert run(['clients_delete', '1']) == \
+        ""
+        
+def test_A31(run, pers_order_create, get_help):
+    assert run(['clients_delete', '2']) == \
+        ""

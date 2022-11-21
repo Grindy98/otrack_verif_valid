@@ -3,6 +3,8 @@ from source.main import main
 import source.persistent as pers
 from source.product import Product
 from source.test.general_test import run, FILENAME, pers_empty, get_help
+from source.order import Order
+from source.test.fixtures import pers_client_create, pers_client_create_mult, pers_product_create, pers_product_create_mult, pers_order_create
 
 def test_A4(run, pers_empty, get_help):
     assert run(['products_create', 'tmt01', 'Tomatoes', '21.2']) == \
@@ -60,35 +62,22 @@ def test_A17(run, pers_empty, get_help):
     assert run(['products_create', '!tmt', 'Tomatoes', '1']) == \
         'Invalid data format.'
 
-######## FIXTURES ########
-@pytest.fixture
-def pers_product_create(pers_empty):
-    pers.load_from_save(FILENAME)
-    product = Product.__new__(Product)
-    product.ref = 'tmt01'
-    product.name = 'Tomatoes'
-    product.price = '21'
-    pers.get_class_list(Product).append(product)
-    pers.dump_to_save(FILENAME)
+def test_A25(run, pers_product_create_mult, get_help):
+    assert run(['products_edit', 'tmt01', '-p', '120', '-r', 'ctmt01', '-n', 'Tomata']) == \
+        "Impossible to register the product: duplicate reference."
 
-@pytest.fixture
-def pers_product_create_mult(pers_empty):
-    pers.load_from_save(FILENAME)
-    product = Product.__new__(Product)
-    product.ref = 'tmt01'
-    product.name = 'Tomatoes'
-    product.price = '21'
-    pers.get_class_list(Product).append(product)
-    
-    product2 = Product.__new__(Product)
-    product2.ref = 'ctmt01'
-    product2.name = 'Cherry Tomatoes'
-    product2.price = '42'
-    pers.get_class_list(Product).append(product2)
-    
-    product3 = Product.__new__(Product)
-    product3.ref = 'bnn01'
-    product3.name = 'Banana'
-    product3.price = '420'
-    pers.get_class_list(Product).append(product3)
-    pers.dump_to_save(FILENAME)
+def test_A26(run, pers_product_create_mult, get_help):
+    assert run(['products_edit', 'tmt01']) == \
+        "Tomatoes - €21 - Ref: tmt01"
+
+def test_A27(run, pers_product_create_mult, get_help):
+    assert run(['products_edit', 'tmt01', '-p', 'price']) == \
+        "Invalid data format."
+        
+def test_A28(run, pers_order_create, get_help):
+    assert run(['products_delete', 'tmt01']) == \
+        ""
+        
+def test_A29(run, pers_order_create, get_help):
+    assert run(['products_delete', 'ctmt01']) == \
+        ""
