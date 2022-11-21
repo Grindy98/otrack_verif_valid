@@ -1,5 +1,6 @@
 [run]
 source = ..
+omit = helper_script.py
 branch = True
 dynamic_context = test_function
 [report] 
