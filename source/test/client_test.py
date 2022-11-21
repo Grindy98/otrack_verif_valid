@@ -101,10 +101,14 @@ def test_B22(run, pers_client_create):
 def test_A30(run, pers_order_create):
     assert run(['clients_delete', '1']) == \
         ""
+    assert run(['orders_show', '21/11/1999', '--full']) == \
+        "Orders for the 21/11/1999:\ntmt01 - 1\n\tClient Removed user\nctmt01 - 7\n\tClient 2 - Jackson - 7"
         
 def test_A31(run, pers_order_create):
     assert run(['clients_delete', '2']) == \
         ""
+    assert run(['orders_show', '21/11/2025', '--full']) == \
+        "Orders for the 21/11/2025:"
 
 def test_B24(run, pers_empty):
     assert run(['clients_create', '', 'email@email.com']) == \

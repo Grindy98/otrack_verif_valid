@@ -38,14 +38,14 @@ def test_A24(run, pers_order_create):
     assert run(['orders_show', '21/11/1999', '--full']) == \
         "Orders for the 21/11/1999:\ntmt01 - 1\n\tClient 1 - Jane Doe - 1\nctmt01 - 7\n\tClient 2 - Jackson - 7"
 
-def test_B26(run, pers_order_create):
+def test_B26(run, pers_empty):
     assert run(['orders_add', 'a', 'bnn01', '7', '31/01/2001']) == \
         "No client matches with this information."
 
-def test_B27(run, pers_order_create):
+def test_B27(run, pers_empty):
     assert run(['orders_add', '1', 'bnn01', '7.0', '31/01/2001']) == \
         "Invalid data format."
 
-def test_B28(run, pers_order_create):
+def test_B28(run, pers_empty):
     assert run(['orders_add', '1', 'bnn01', 'a', '31/01/2001']) == \
         "Invalid data format."

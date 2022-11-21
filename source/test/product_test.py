@@ -77,10 +77,14 @@ def test_A27(run, pers_product_create_mult, get_help):
 def test_A28(run, pers_order_create, get_help):
     assert run(['products_delete', 'tmt01']) == \
         ""
+    assert run(['orders_show', '21/11/1999', '--full']) == \
+        "Orders for the 21/11/1999:\nRemoved product\n\tClient 1 - Jane Doe - 1\nctmt01 - 7\n\tClient 2 - Jackson - 7"
         
 def test_A29(run, pers_order_create, get_help):
     assert run(['products_delete', 'ctmt01']) == \
         ""
+    assert run(['orders_show', '21/11/2025', '--full']) == \
+        "Orders for the 21/11/2025:"
 
 def test_B25(run, pers_empty):
     assert run(['products_create', 'refMissing', 'Nothing', '']) == \
