@@ -89,3 +89,21 @@ def test_A29(run, pers_order_create, get_help):
 def test_B25(run, pers_empty):
     assert run(['products_create', 'refMissing', 'Nothing', '']) == \
         "Invalid data format."
+
+def test_B29(run, pers_order_create, get_help):
+    assert run(['products_delete', 'tmt01']) == \
+        ""
+    assert run(['orders_show', '21/11/1999']) == \
+        "Orders for the 21/11/1999:\nRemoved product\nctmt01 - 7"
+
+def test_B33(run, pers_empty, get_help):
+    assert run(['products_edit']) == \
+        'Missing required arguments to command.\n' + get_help()
+
+def test_B34(run, pers_empty, get_help):
+    assert run(['products_delete']) == \
+        'Missing required arguments to command.\n' + get_help()
+
+def test_B35(run, pers_empty, get_help):
+    assert run(['products_find']) == \
+        'Missing required arguments to command.\n' + get_help()

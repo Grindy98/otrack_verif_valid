@@ -113,3 +113,15 @@ def test_A31(run, pers_order_create):
 def test_B24(run, pers_empty):
     assert run(['clients_create', '', 'email@email.com']) == \
         "Invalid data format."
+
+def test_B30(run, pers_empty, get_help):
+    assert run(['clients_delete']) == \
+        'Missing required arguments to command.\n' + get_help()
+
+def test_B31(run, pers_empty, get_help):
+    assert run(['clients_show']) == \
+        'Missing required arguments to command.\n' + get_help()
+
+def test_B32(run, pers_empty, get_help):
+    assert run(['clients_getid']) == \
+        'Missing required arguments to command.\n' + get_help()
