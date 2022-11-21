@@ -183,16 +183,17 @@ class OperationWrapper:
             raise e.Error2
         
         orders_list = [order for order in Order.get_list() if order.date == date]
-            
+        
+        print("Orders for the " + date + ":")
+        
         if show_full:
             for order in orders_list:
-                print("Order for the date: ", date, "\n")
                 print(order)
                 client = [c for c in Client.get_list() if c.id == order.client_id]
                 for c in client:
-                    print(c.id, " - ", c.name, " - ", order.amount)
+                    print("\t" + "Client", str(c.id) + " - " + c.name + " - " + str(order.amount))
                 
-        for order in orders_list:
-            print("Order for the date: ", date, "\n")
-            print(order)
+        else:
+            for order in orders_list:
+                print(order)
                 
