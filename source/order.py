@@ -20,7 +20,7 @@ class Order:
 
         # Convert string to float
         try:
-            self.amount = float(amount)
+            self.amount = int(amount)
         except:
             raise e.Error2()
         

@@ -68,7 +68,7 @@ class OperationWrapper:
             Order.get_list().remove(order)
         
         for order in past_orders:
-            order.client_id = "Removed user"
+            order.client_id = None
 
         Client.get_list().remove(search_l[0])
     
@@ -148,7 +148,7 @@ class OperationWrapper:
             Order.get_list().remove(order)
         
         for order in past_orders:
-            order.client_id = "Removed user"
+            order.product_ref = None
 
         Product.get_list().remove(search_l[0])
     
@@ -188,12 +188,21 @@ class OperationWrapper:
         
         if show_full:
             for order in orders_list:
-                print(order)
-                client = [c for c in Client.get_list() if c.id == order.client_id]
-                for c in client:
-                    print("\t" + "Client", str(c.id) + " - " + c.name + " - " + str(order.amount))
+                if order.product_ref is None:
+                    print('Removed product')
+                else:
+                    print(order)
+                if order.client_id is None: 
+                        print("\t" + "Client Removed user")
+                else:
+                    client = [c for c in Client.get_list() if c.id == order.client_id]
+                    for c in client:
+                        print("\t" + "Client", str(c.id) + " - " + c.name + " - " + str(order.amount))
                 
         else:
             for order in orders_list:
-                print(order)
+                if order.product_ref is None:
+                    print('Removed product')
+                else:
+                    print(order)
                 
