@@ -11,7 +11,6 @@ class OperationWrapper:
     def clients_create(fullname, email, phone):
         c = Client(fullname, email, phone)
         Client.get_list().append(c)
-        print(c)
 
     @staticmethod
     def clients_edit(id, fullname, email, phone):
@@ -88,7 +87,7 @@ class OperationWrapper:
     
     @staticmethod
     def clients_getid(email):
-        search_l = [c for c in Client.get_list() if c.email == email]
+        search_l = [c for c in Client.get_list() if c.id == id]
         assert(len(search_l) <= 1)
         # If no matching email was found
         if not search_l:
